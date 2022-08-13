@@ -13,7 +13,6 @@ namespace PetClinicAppointmentApp.Resources
         public string Phone_number { get; set; }
         public string Address { get; set; }
         public long Village_id { get; set; }
-        public float Rating { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool Status { get; set; }

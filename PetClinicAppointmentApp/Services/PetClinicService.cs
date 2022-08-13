@@ -154,26 +154,35 @@ namespace PetClinicAppointmentApp.Services
             string name
         )
         {
-           var clinicListAsc = new List<PetClinic>();
-           clinicListAsc = petClinicAppointmentDbContext.PetClinics
-                      .Where(clinic => clinic.Name.Trim().ToLower().Contains(name.Trim().ToLower()))
-                      .AsEnumerable()
-                      .Select(clinic =>
-                {
-                    clinic.Distance = (new GeoCoordinate(clinic.Latitude, clinic.Longitude)
-                           .GetDistanceTo(new GeoCoordinate(
-                               (double)latitude,
-                               (double)longitude
-                               )
-                           ))/1000;
-                          return clinic;
-                      })
-                      .Where(clinic => clinic.Distance <= 15)
-                      .OrderBy(clinic => clinic.Distance)
-                      .AsQueryable()
-                      .Skip((pageNumber - 1) * pageSize)
-                      .Take(pageSize)
-                      .ToList();
+            var clinicListAsc = new List<PetClinic>();
+            if (latitude != null && longitude != null){
+                clinicListAsc = petClinicAppointmentDbContext.PetClinics
+                           .Where(clinic => clinic.Name.Trim().ToLower().Contains(name.Trim().ToLower()))
+                           .AsEnumerable()
+                           .Select(clinic =>
+                     {
+                         clinic.Distance = (new GeoCoordinate(clinic.Latitude, clinic.Longitude)
+                                .GetDistanceTo(new GeoCoordinate(
+                                    (double)latitude,
+                                    (double)longitude
+                                    )
+                                )) / 1000;
+                         return clinic;
+                     })
+                           .Where(clinic => clinic.Distance <= 15)
+                           .OrderBy(clinic => clinic.Distance)
+                           .AsQueryable()
+                           .Skip((pageNumber - 1) * pageSize)
+                           .Take(pageSize)
+                           .ToList();
+            } else
+            {
+                clinicListAsc = await petClinicAppointmentDbContext.PetClinics
+                         .Where(clinic => clinic.Name.Trim().ToLower().Contains(name.Trim().ToLower()))
+                         .Skip((pageNumber - 1) * pageSize)
+                         .Take(pageSize)
+                         .ToListAsync();
+            }
             return clinicListAsc;
         }
 

@@ -16,7 +16,6 @@ namespace PetClinicAppointmentApp.Resources
         public byte[]? Image { get; set; }
         public string Address { get; set; }
         public long? Village_id { get; set; }
-        public float Rating { get; set; } = 0;
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool Status { get; set; }
