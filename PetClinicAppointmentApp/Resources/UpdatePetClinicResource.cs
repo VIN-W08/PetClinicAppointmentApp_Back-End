@@ -7,7 +7,6 @@ namespace PetClinicAppointmentApp.Resources
     {
         public string? Name { get; set; }
         public string? Email { get; set; }
-        [JsonPropertyName("phone_num")]
         public string? Phone_number { get; set; }
         public string? Address { get; set; }
         public long? Village_id { get; set; }
