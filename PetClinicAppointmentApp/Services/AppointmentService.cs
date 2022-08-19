@@ -23,13 +23,6 @@ namespace PetClinicAppointmentApp.Services
             {
                 return 3;
             }
-            else if (
-               (appointment.Status.Equals(1)) &&
-               (appointment.Start_schedule.AddMinutes(30) <= DateTime.Now)
-           )
-            {
-                return 3;
-            }
             return appointment.Status;
         }
 
